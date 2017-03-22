@@ -48,6 +48,10 @@ use Solarium\Exception\RuntimeException;
  */
 class Request extends Configurable
 {
+    // TODO define correct query base type
+    const SERVER_QUERY   = 'SERVER_QUERY';
+    const CORE_QUERY   = 'CORE_QUERY';
+
     /**
      * Request GET method.
      */
@@ -115,6 +119,7 @@ class Request extends Configurable
      */
     public function getHandler()
     {
+        // TODO check if it is a server of collection/core request
         return $this->getOption('handler');
     }
 
@@ -392,7 +397,7 @@ class Request extends Configurable
     }
 
     /**
-     * Get an URI for this request.
+     * Get a URI for this request.
      *
      * @return string
      */

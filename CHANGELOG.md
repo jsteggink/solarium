@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [Unreleased]
+
+- added: new EndpointInterface and AbstractEndpoint classes
+- improvement: refactored Endpoint class to fit new interface and abstract class
+- improvement: PHP 7 and higher is required
+- improvement: renamed library to src directory which is a best practice
+- improvement: phpunit 6 and higher is now required for unit testing
+- improvement: updated tests to phpunit 6
+
 ## 3.8.0 - 2017-01-31
 
 - bugfix: use GET request for extracting remote files

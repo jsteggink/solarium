@@ -2,10 +2,11 @@
 
 namespace Solarium\Tests\Support\DataFixtures;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Support\DataFixtures\FixtureLoader;
 use Solarium\Tests\Support\DataFixtures\Fixtures\MockFixture1;
 
-class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
+class FixtureLoaderTest extends TestCase
 {
     private $fixturePath;
 
@@ -35,13 +36,13 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->client = $this->getMock('Solarium\Core\Client\ClientInterface');
+        $this->client = $this->createMock('Solarium\Core\Client\ClientInterface');
         $this->fixturePath = __DIR__ . '/Fixtures/';
     }
 
     private function mockLoader()
     {
-        $loader = $this->getMock('Solarium\Support\DataFixtures\Loader', array(), array($this->client));
+        $loader = $this->createMock('Solarium\Support\DataFixtures\Loader', array(), array($this->client));
 
         $loader->expects($this->once())
             ->method('loadFromDirectory')
@@ -52,7 +53,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
             ->will(
                 $this->returnValue(
                     array(
-                        $this->getMockFixture()
+                        $this->createMockFixture()
                     )
                 )
             );
@@ -62,7 +63,7 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
     private function mockPurger($expectPurge)
     {
-        $purger = $this->getMock('Solarium\Support\DataFixtures\Purger', array(), array($this->client));
+        $purger = $this->createMock('Solarium\Support\DataFixtures\Purger', array(), array($this->client));
 
         $purger->expects($expectPurge ? $this->once() : $this->never())
             ->method('purge');
@@ -72,12 +73,12 @@ class FixtureLoaderTest extends \PHPUnit_Framework_TestCase
 
     private function mockExecutor()
     {
-        $executor = $this->getMock('Solarium\Support\DataFixtures\Executor', array(), array($this->client));
+        $executor = $this->createMock('Solarium\Support\DataFixtures\Executor', array(), array($this->client));
 
         return $executor;
     }
 
-    private function getMockFixture()
+    private function createMockFixture()
     {
         return new MockFixture1();
     }

@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\MoreLikeThis;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\MoreLikeThis\Query;
 use Solarium\QueryType\MoreLikeThis\RequestBuilder;
 use Solarium\Core\Client\Request;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends TestCase
 {
     /**
      * @var Query

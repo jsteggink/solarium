@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\Core\Client;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Exception\HttpException;
 
-class HttpExceptionTest extends \PHPUnit_Framework_TestCase
+class HttpExceptionTest extends TestCase
 {
     public function testConstructor()
     {

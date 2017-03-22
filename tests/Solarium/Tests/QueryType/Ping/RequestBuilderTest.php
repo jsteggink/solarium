@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Ping;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Ping\RequestBuilder;
 use Solarium\Core\Client\Request;
 use Solarium\QueryType\Ping\Query;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends TestCase
 {
     public function testBuild()
     {

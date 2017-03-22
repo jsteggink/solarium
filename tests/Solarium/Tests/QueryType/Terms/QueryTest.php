@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Terms;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Terms\Query;
 use Solarium\Core\Client\Client;
 
-class QueryTest extends \PHPUnit_Framework_TestCase
+class QueryTest extends TestCase
 {
     /**
      * @var Query

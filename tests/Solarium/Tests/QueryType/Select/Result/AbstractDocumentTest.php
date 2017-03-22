@@ -31,7 +31,9 @@
 
 namespace Solarium\Tests\QueryType\Select\Result;
 
-abstract class AbstractDocumentTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+abstract class AbstractDocumentTest extends TestCase
 {
     protected $doc;
 
@@ -82,9 +84,11 @@ abstract class AbstractDocumentTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\RuntimeException
+     */
     public function testSetField()
     {
-        $this->setExpectedException('Solarium\Exception\RuntimeException');
         $this->doc->newField = 'new value';
     }
 
@@ -133,15 +137,19 @@ abstract class AbstractDocumentTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\RuntimeException
+     */
     public function testArraySet()
     {
-        $this->setExpectedException('Solarium\Exception\RuntimeException');
         $this->doc['newField'] = 'new value';
     }
 
+    /**
+     * @expectedException \Solarium\Exception\RuntimeException
+     */
     public function testArrayUnset()
     {
-        $this->setExpectedException('Solarium\Exception\RuntimeException');
         unset($this->doc['newField']);
     }
 

@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\Plugin\Loadbalancer\Event;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Plugin\Loadbalancer\Event\EndpointFailure;
 use Solarium\Core\Client\Client;
 use Solarium\Exception\HttpException;
 
-class EndpointFailureTest extends \PHPUnit_Framework_TestCase
+class EndpointFailureTest extends TestCase
 {
     public function testConstructorAndGetters()
     {

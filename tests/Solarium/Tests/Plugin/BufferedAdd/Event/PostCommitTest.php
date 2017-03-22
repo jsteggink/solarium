@@ -31,13 +31,14 @@
 
 namespace Solarium\Tests\Plugin\BufferedAdd\Event;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Plugin\BufferedAdd\Event\PostCommit;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\Core\Client\Client;
 use Solarium\Core\Client\Response;
 use Solarium\Core\Query\Result\Result;
 
-class PostCommitTest extends \PHPUnit_Framework_TestCase
+class PostCommitTest extends TestCase
 {
     public function testConstructorAndGetter()
     {

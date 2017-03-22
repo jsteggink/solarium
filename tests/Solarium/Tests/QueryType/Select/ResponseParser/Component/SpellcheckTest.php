@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Select\ResponseParser\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\ResponseParser\Component\Spellcheck as Parser;
 use Solarium\QueryType\Select\Query\Query;
 
-class SpellcheckTest extends \PHPUnit_Framework_TestCase
+class SpellcheckTest extends TestCase
 {
     protected $parser;
     protected $query;

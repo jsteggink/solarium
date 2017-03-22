@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\Core\Event;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Event\PostCreateQuery;
 use Solarium\QueryType\Select\Query\Query;
 
-class PostCreateQueryTest extends \PHPUnit_Framework_TestCase
+class PostCreateQueryTest extends TestCase
 {
     public function testConstructorAndGetters()
     {

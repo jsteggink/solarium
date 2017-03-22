@@ -31,6 +31,7 @@
 
 namespace Solarium\Tests\Core\Client\Adapter;
 
+use PHPUnit\Framework\TestCase;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Client as GuzzleClient;
@@ -44,7 +45,7 @@ use Solarium\Core\Exception;
  * @covers ::<private>
  * @covers ::getGuzzleClient
  */
-final class Guzzle3Test extends \PHPUnit_Framework_TestCase
+final class Guzzle3Test extends TestCase
 {
     /**
      * @var Guzzle3Adapter

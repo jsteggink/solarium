@@ -31,12 +31,13 @@
 
 namespace Solarium\Tests\Core\Client\Adapter;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Adapter\Http as HttpAdapter;
 use Solarium\Core\Client\Request;
 use Solarium\Core\Client\Endpoint;
 use Solarium\Exception\HttpException;
 
-class HttpTest extends \PHPUnit_Framework_TestCase
+class HttpTest extends TestCase
 {
     /**
      * @var HttpAdapter
@@ -57,7 +58,8 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
         $endpoint = new Endpoint();
 
-        $mock = $this->getMock('Solarium\Core\Client\Adapter\Http', array('getData', 'check'));
+        $mock = $this->createMock('Solarium\Core\Client\Adapter\Http', array('getData', 'check'));
+        // TODO fix protected mock
         $mock->expects($this->once())
              ->method('getData')
              ->with($this->equalTo('http://127.0.0.1:8983/solr/?'), $this->isType('resource'))
@@ -66,6 +68,9 @@ class HttpTest extends \PHPUnit_Framework_TestCase
         $mock->execute($request, $endpoint);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\HttpException
+     */
     public function testExecuteErrorResponse()
     {
         $data = 'test123';
@@ -73,7 +78,8 @@ class HttpTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $endpoint = new Endpoint();
 
-        $mock = $this->getMock('Solarium\Core\Client\Adapter\Http', array('getData', 'check'));
+        $mock = $this->createMock('Solarium\Core\Client\Adapter\Http');
+        // TODO fix protected mock
         $mock->expects($this->once())
              ->method('getData')
              ->with($this->equalTo('http://127.0.0.1:8983/solr/?'), $this->isType('resource'))
@@ -82,15 +88,15 @@ class HttpTest extends \PHPUnit_Framework_TestCase
              ->method('check')
              ->will($this->throwException(new HttpException("HTTP request failed")));
 
-        $this->setExpectedException('Solarium\Exception\HttpException');
         $mock->execute($request, $endpoint);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\HttpException
+     */
     public function testCheckError()
     {
-        $this->setExpectedException('Solarium\Exception\HttpException');
         $this->adapter->check(false, array());
-
     }
 
     public function testCheckOk()

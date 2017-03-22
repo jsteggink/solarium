@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Query\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Component\BoostQuery;
 
-class BoostQueryTest extends \PHPUnit_Framework_TestCase
+class BoostQueryTest extends TestCase
 {
     protected $boostQuery;
 

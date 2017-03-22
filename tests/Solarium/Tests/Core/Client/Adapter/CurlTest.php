@@ -31,12 +31,14 @@
 
 namespace Solarium\Tests\Core\Client\Adapter;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Adapter\Curl as CurlAdapter;
 use Solarium\Core\Client\Request;
 use Solarium\Core\Client\Endpoint;
 use Solarium\Core\Exception;
+use Solarium\Exception\HttpException;
 
-class CurlTest extends \PHPUnit_Framework_TestCase
+class CurlTest extends TestCase
 {
     /**
      * @var CurlAdapter
@@ -52,6 +54,9 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $this->adapter = new CurlAdapter();
     }
 
+    /**
+     * @expectedException \Solarium\Exception\HttpException
+     */
     public function testCheck()
     {
         $data = 'data';
@@ -64,7 +69,6 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $data = '';
         $headers = array();
 
-        $this->setExpectedException('Solarium\Exception\HttpException');
         $this->adapter->check($data, $headers, $handler);
 
         curl_close($handler);
@@ -79,7 +83,7 @@ class CurlTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $endpoint = new Endpoint();
 
-        $mock = $this->getMock('Solarium\Core\Client\Adapter\Curl', array('getData'));
+        $mock = $this->createMock('Solarium\Core\Client\Adapter\Curl', array('getData'));
         $mock->expects($this->once())
                  ->method('getData')
                  ->with($request, $endpoint)

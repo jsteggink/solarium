@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Analysis\Query;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Analysis\Query\AbstractQuery;
 
-class QueryTest extends \PHPUnit_Framework_TestCase
+class QueryTest extends TestCase
 {
     protected $query;
 

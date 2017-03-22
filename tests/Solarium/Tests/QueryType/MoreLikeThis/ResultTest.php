@@ -31,12 +31,13 @@
 
 namespace Solarium\Tests\QueryType\MoreLikeThis;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\MoreLikeThis\Query;
 use Solarium\QueryType\MoreLikeThis\Result;
 use Solarium\Core\Client\Client;
 use Solarium\Core\Client\Response;
 
-class ResultTest extends \PHPUnit_Framework_TestCase
+class ResultTest extends TestCase
 {
     public function testGetInterestingTerms()
     {
@@ -53,17 +54,19 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $mock->getInterestingTerms();
     }
 
+    /**
+     * @expectedException \Solarium\Exception\UnexpectedValueException
+     */
     public function testGetInterestingTermsException()
     {
         $query = new Query();
         $query->setInterestingTerms('none');
 
-        $mock = $this->getMock('Solarium\QueryType\MoreLikeThis\Result', array('getQuery'), array(), '', false);
+        $mock = $this->createPartialMock('Solarium\QueryType\MoreLikeThis\Result');
         $mock->expects($this->once())
              ->method('getQuery')
              ->will($this->returnValue($query));
 
-        $this->setExpectedException('Solarium\Exception\UnexpectedValueException');
         $mock->getInterestingTerms();
     }
 
@@ -82,6 +85,9 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $mock->getMatch();
     }
 
+    /**
+     * @expectedException \Solarium\Exception\UnexpectedValueException
+     */
     public function testGetMatchException()
     {
         $query = new Query();
@@ -91,8 +97,6 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $mock->expects($this->once())
              ->method('getQuery')
              ->will($this->returnValue($query));
-
-        $this->setExpectedException('Solarium\Exception\UnexpectedValueException');
         $mock->getMatch();
     }
 
@@ -114,15 +118,12 @@ class ResultTest extends \PHPUnit_Framework_TestCase
      */
     protected function getQueryResultMock()
     {
-        return $this->getMock(
+        return $this->createPartialMock(
             'Solarium\QueryType\MoreLikeThis\Result',
             array(
                 'getQuery',
                 'parseResponse',
-            ),
-            array(),
-            '',
-            false
+            )
         );
     }
 }

@@ -31,6 +31,7 @@
 
 namespace Solarium\Tests\Plugin\Loadbalancer;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Client;
 use Solarium\Plugin\Loadbalancer\Loadbalancer;
 use Solarium\QueryType\Select\Query\Query as SelectQuery;
@@ -42,7 +43,7 @@ use Solarium\Exception\HttpException;
 use Solarium\Core\Event\PreCreateRequest as PreCreateRequestEvent;
 use Solarium\Core\Event\PreExecuteRequest as PreExecuteRequestEvent;
 
-class LoadbalancerTest extends \PHPUnit_Framework_TestCase
+class LoadbalancerTest extends TestCase
 {
     /**
      * @var Loadbalancer
@@ -70,7 +71,7 @@ class LoadbalancerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->client = new Client($options);
-        $adapter = $this->getMock('Solarium\Core\Client\Adapter\Http');
+        $adapter = $this->createMock('Solarium\Core\Client\Adapter\Http');
         $adapter->expects($this->any())
             ->method('execute')
             ->will($this->returnValue('dummyresult'));
@@ -144,11 +145,13 @@ class LoadbalancerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddEndpointWithDuplicateKey()
     {
         $this->plugin->addEndpoint('s1', 10);
 
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->plugin->addEndpoint('s1', 20);
     }
 
@@ -236,6 +239,9 @@ class LoadbalancerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('server2', $this->plugin->getForcedEndpointForNextQuery());
     }
 
+    /**
+     * @expectedException \Solarium\Exception\OutOfBoundsException
+     */
     public function testSetForcedEndpointForNextQueryWithInvalidKey()
     {
         $endpoints1 = array(
@@ -244,7 +250,6 @@ class LoadbalancerTest extends \PHPUnit_Framework_TestCase
         );
         $this->plugin->addEndpoints($endpoints1);
 
-        $this->setExpectedException('Solarium\Exception\OutOfBoundsException');
         $this->plugin->setForcedEndpointForNextQuery('s3');
     }
 
@@ -439,6 +444,10 @@ class LoadbalancerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\RuntimeException
+     * @expectedExceptionMessage Maximum number of loadbalancer retries reached
+     */
     public function testFailoverMaxRetries()
     {
         $this->plugin = new TestLoadbalancer(); // special loadbalancer that returns endpoints in fixed order
@@ -459,11 +468,6 @@ class LoadbalancerTest extends \PHPUnit_Framework_TestCase
         $query = new SelectQuery();
         $event = new PreCreateRequestEvent($query);
         $this->plugin->preCreateRequest($event);
-
-        $this->setExpectedException(
-            'Solarium\Exception\RuntimeException',
-            'Maximum number of loadbalancer retries reached'
-        );
 
         $event = new PreExecuteRequestEvent($request, new Endpoint);
         $this->plugin->preExecuteRequest($event);

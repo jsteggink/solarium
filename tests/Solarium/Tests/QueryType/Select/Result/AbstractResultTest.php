@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Select\Result;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Document;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
 
-abstract class AbstractResultTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractResultTest extends TestCase
 {
     /**
      * @var SelectDummy

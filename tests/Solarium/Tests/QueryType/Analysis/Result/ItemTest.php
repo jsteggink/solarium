@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Analysis\Result;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Analysis\Result\Item;
 
-class ItemTest extends \PHPUnit_Framework_TestCase
+class ItemTest extends TestCase
 {
     /**
      * @var Item

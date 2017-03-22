@@ -31,6 +31,7 @@
 
 namespace Solarium\Tests\QueryType\Select\Result;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Document;
 
 class DocumentTest extends AbstractDocumentTest

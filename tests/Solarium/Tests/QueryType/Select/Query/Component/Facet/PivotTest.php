@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Select\Query\Component\Facet;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Component\Facet\Pivot;
 use Solarium\QueryType\Select\Query\Component\FacetSet;
 
-class PivotTest extends \PHPUnit_Framework_TestCase
+class PivotTest extends TestCase
 {
     /**
      * @var Pivot

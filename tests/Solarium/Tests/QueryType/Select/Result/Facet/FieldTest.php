@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Facet;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Facet\Field;
 
-class FieldTest extends \PHPUnit_Framework_TestCase
+class FieldTest extends TestCase
 {
     protected $values;
     protected $facet;

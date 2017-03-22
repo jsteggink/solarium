@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Select\Query\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Component\BoostQuery;
 use Solarium\QueryType\Select\Query\Component\DisMax;
 use Solarium\QueryType\Select\Query\Query;
 
-class DisMaxTest extends \PHPUnit_Framework_TestCase
+class DisMaxTest extends TestCase
 {
     /**
      * @var DisMax
@@ -226,15 +227,20 @@ class DisMaxTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddBoostQueryWithoutKey()
     {
         $bq = new BoostQuery;
         $bq->setQuery('category:1');
 
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->disMax->addBoostQuery($bq);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddBoostQueryWithUsedKey()
     {
         $bq1 = new BoostQuery;
@@ -244,7 +250,6 @@ class DisMaxTest extends \PHPUnit_Framework_TestCase
         $bq2->setKey('bq1')->setQuery('category:2');
 
         $this->disMax->addBoostQuery($bq1);
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->disMax->addBoostQuery($bq2);
     }
 

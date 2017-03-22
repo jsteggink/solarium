@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Analysis\Query;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Analysis\Query\Field;
 use Solarium\Core\Client\Client;
 
-class FieldTest extends \PHPUnit_Framework_TestCase
+class FieldTest extends TestCase
 {
     /**
      * @var Field

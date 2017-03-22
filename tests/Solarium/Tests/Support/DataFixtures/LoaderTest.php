@@ -2,9 +2,10 @@
 
 namespace Solarium\Tests\Support\DataFixtures;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Support\DataFixtures\Loader;
 
-class LoaderTest extends \PHPUnit_Framework_TestCase
+class LoaderTest extends TestCase
 {
     public function testGetEmptyFixtures()
     {
@@ -17,8 +18,8 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $loader = new Loader();
 
         $fixtures = array(
-            $this->getMock('Solarium\Support\DataFixtures\FixtureInterface'),
-            $this->getMock('Solarium\Support\DataFixtures\FixtureInterface'),
+            $this->createMock('Solarium\Support\DataFixtures\FixtureInterface'),
+            $this->createMock('Solarium\Support\DataFixtures\FixtureInterface'),
         );
 
         foreach ($fixtures as $fixture) {
@@ -29,7 +30,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Solarium\Exception\InvalidArgumentException
      */
     public function testLoadFromInvalidDir()
     {

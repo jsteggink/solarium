@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Query;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\FilterQuery;
 
-class FilterQueryTest extends \PHPUnit_Framework_TestCase
+class FilterQueryTest extends TestCase
 {
     protected $filterQuery;
 

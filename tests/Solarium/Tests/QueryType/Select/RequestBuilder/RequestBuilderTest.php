@@ -31,13 +31,14 @@
 
 namespace Solarium\Tests\QueryType\Select\RequestBuilder;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Request;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\FilterQuery;
 use Solarium\QueryType\Select\RequestBuilder\RequestBuilder as RequestBuilder;
 use Solarium\QueryType\Select\Query\Component\AbstractComponent;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends TestCase
 {
     /**
      * @var Query
@@ -64,7 +65,7 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSelectUrlWithDefaultValues()
+    public function testSelectUriWithDefaultValues()
     {
         $request = $this->builder->build($this->query);
 
@@ -79,7 +80,7 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSelectUrlWithSort()
+    public function testSelectUriWithSort()
     {
         $this->query->addSort('id', Query::SORT_ASC);
         $this->query->addSort('name', Query::SORT_DESC);
@@ -96,7 +97,7 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSelectUrlWithQueryDefaultFieldAndOperator()
+    public function testSelectUriWithQueryDefaultFieldAndOperator()
     {
         $this->query->setQueryDefaultField('mydefault');
         $this->query->setQueryDefaultOperator(Query::QUERY_OPERATOR_AND);
@@ -113,7 +114,7 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testSelectUrlWithSortAndFilters()
+    public function testSelectUriWithSortAndFilters()
     {
         $this->query->addSort('id', Query::SORT_ASC);
         $this->query->addSort('name', Query::SORT_DESC);

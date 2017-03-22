@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Extract;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Extract\Query;
 use Solarium\QueryType\Extract\RequestBuilder;
 use Solarium\Core\Client\Request;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends TestCase
 {
     /**
      * @var Query
@@ -84,7 +85,7 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testGetUriWithStreamUrl()
+    public function testGetUriWithStreamUri()
     {
         $query = $this->query;
         $query->setFile('http://solarium-project.org/');
@@ -122,13 +123,14 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\RuntimeException
+     */
     public function testDocumentWithBoostThrowsException()
     {
         $document = $this->query->createDocument();
         $document->setBoost(4);
         $this->query->setDocument($document);
-
-        $this->setExpectedException('Solarium\Exception\RuntimeException');
         $this->builder->build($this->query);
     }
 

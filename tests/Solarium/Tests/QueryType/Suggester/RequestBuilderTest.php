@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Suggester;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Suggester\Query;
 use Solarium\QueryType\Suggester\RequestBuilder;
 use Solarium\Core\Client\Request;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends TestCase
 {
     /**
      * @var Query

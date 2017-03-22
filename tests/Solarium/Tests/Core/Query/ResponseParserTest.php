@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\Core\Query;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Query\AbstractResponseParser;
 
-class ResponseParserTest extends \PHPUnit_Framework_TestCase
+class ResponseParserTest extends TestCase
 {
     /**
      * @var TestResponseParser

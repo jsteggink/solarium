@@ -31,13 +31,14 @@
 
 namespace Solarium\Tests\Core\Event;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Client;
 use Solarium\Core\Event\PreCreateResult;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\Core\Client\Response;
 use Solarium\Core\Query\Result\Result;
 
-class PreCreateResultTest extends \PHPUnit_Framework_TestCase
+class PreCreateResultTest extends TestCase
 {
     public function testConstructorAndGetters()
     {

@@ -31,13 +31,14 @@
 
 namespace Solarium\Tests\Core\Event;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Client;
 use Solarium\Core\Event\PostCreateResult;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\Core\Client\Response;
 use Solarium\Core\Query\Result\Result;
 
-class PostCreateResultTest extends \PHPUnit_Framework_TestCase
+class PostCreateResultTest extends TestCase
 {
     public function testConstructorAndGetters()
     {

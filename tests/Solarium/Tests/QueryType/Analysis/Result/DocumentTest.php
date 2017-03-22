@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Analysis\Result;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Analysis\Result\Document;
 
-class DocumentTest extends \PHPUnit_Framework_TestCase
+class DocumentTest extends TestCase
 {
     /**
      * @var DocumentDummy

@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Grouping;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Grouping\Result;
 
-class GroupingTest extends \PHPUnit_Framework_TestCase
+class GroupingTest extends TestCase
 {
     /**
      * @var Result

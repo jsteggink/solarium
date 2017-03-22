@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Analysis\RequestBuilder;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Analysis\Query\Field as FieldQuery;
 use Solarium\QueryType\Analysis\RequestBuilder\Field as FieldBuilder;
 
-class FieldTest extends \PHPUnit_Framework_TestCase
+class FieldTest extends TestCase
 {
     /**
      * @var FieldQuery

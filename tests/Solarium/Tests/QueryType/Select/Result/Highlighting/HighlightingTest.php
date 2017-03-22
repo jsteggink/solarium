@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Highlighting;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Highlighting\Highlighting;
 
-class HighlightingTest extends \PHPUnit_Framework_TestCase
+class HighlightingTest extends TestCase
 {
     /**
      * @var Highlighting

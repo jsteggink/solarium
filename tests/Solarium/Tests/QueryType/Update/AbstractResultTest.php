@@ -31,7 +31,9 @@
 
 namespace Solarium\Tests\QueryType\Update;
 
-abstract class AbstractResultTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+abstract class AbstractResultTest extends TestCase
 {
     protected $result;
 

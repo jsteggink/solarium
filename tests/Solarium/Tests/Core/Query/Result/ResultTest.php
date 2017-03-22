@@ -31,13 +31,14 @@
 
 namespace Solarium\Tests\Core\Query\Result;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Client;
 use Solarium\Core\Client\Response;
 use Solarium\Core\Query\Result\Result;
 use Solarium\QueryType\Select\Query\Query as SelectQuery;
 use Solarium\Exception\HttpException;
 
-class ResultTest extends \PHPUnit_Framework_TestCase
+class ResultTest extends TestCase
 {
     /**
      * @var Result
@@ -61,12 +62,14 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $this->result = new Result($this->client, $this->query, $this->response);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\HttpException
+     */
     public function testResultWithErrorResponse()
     {
         $headers = array('HTTP/1.0 404 Not Found');
         $response = new Response('Error message', $headers);
 
-        $this->setExpectedException('Solarium\Exception\HttpException');
         new Result($this->client, $this->query, $response);
     }
 
@@ -131,22 +134,25 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($resultData, $result->getData());
     }
 
+    /**
+     * @expectedException \Solarium\Exception\RuntimeException
+     */
     public function testGetDataWithUnkownResponseWriter()
     {
         $this->query->setResponseWriter('asdf');
         $result = new Result($this->client, $this->query, $this->response);
 
-        $this->setExpectedException('Solarium\Exception\RuntimeException');
         $result->getData();
     }
 
+    /**
+     * @expectedException \Solarium\Exception\UnexpectedValueException
+     */
     public function testGetInvalidData()
     {
         $data = 'invalid';
         $this->response = new Response($data, $this->headers);
         $this->result = new Result($this->client, $this->query, $this->response);
-
-        $this->setExpectedException('Solarium\Exception\UnexpectedValueException');
         $this->result->getData();
     }
 }

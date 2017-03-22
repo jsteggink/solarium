@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Update\Query\Command;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Update\Query\Command\Optimize;
 use Solarium\QueryType\Update\Query\Query;
 
-class OptimizeTest extends \PHPUnit_Framework_TestCase
+class OptimizeTest extends TestCase
 {
     protected $command;
 

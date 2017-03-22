@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Select\Query\Component\Stats;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Component\Stats\Stats;
 use Solarium\QueryType\Select\Query\Component\Stats\Field;
 use Solarium\QueryType\Select\Query\Query;
 
-class StatsTest extends \PHPUnit_Framework_TestCase
+class StatsTest extends TestCase
 {
     /**
      * @var Stats
@@ -152,14 +153,18 @@ class StatsTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddFieldWithoutKey()
     {
         $fld = new Field;
-
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->stats->addField($fld);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddFieldWithUsedKey()
     {
         $f1 = new Field;
@@ -169,7 +174,6 @@ class StatsTest extends \PHPUnit_Framework_TestCase
         $f2->setKey('f1');
 
         $this->stats->addField($f1);
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->stats->addField($f2);
     }
 

@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Suggester\Result;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Suggester\Result\Term;
 
-class TermTest extends \PHPUnit_Framework_TestCase
+class TermTest extends TestCase
 {
     /**
      * @var Term

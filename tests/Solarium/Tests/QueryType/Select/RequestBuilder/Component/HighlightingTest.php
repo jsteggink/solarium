@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Select\RequestBuilder\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\RequestBuilder\Component\Highlighting as RequestBuilder;
 use Solarium\QueryType\Select\Query\Component\Highlighting\Highlighting as Component;
 use Solarium\Core\Client\Request;
 
-class HighlightingTest extends \PHPUnit_Framework_TestCase
+class HighlightingTest extends TestCase
 {
     public function testBuildComponent()
     {

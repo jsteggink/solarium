@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Extract;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Client;
 use Solarium\QueryType\Update\Query\Document\Document;
 use Solarium\QueryType\Extract\Query;
 
-class QueryTest extends \PHPUnit_Framework_TestCase
+class QueryTest extends TestCase
 {
     /**
      * @var Query

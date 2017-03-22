@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Select\Query\Component\Highlighting;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Component\Highlighting\Highlighting;
 use Solarium\QueryType\Select\Query\Component\Highlighting\Field;
 use Solarium\QueryType\Select\Query\Query;
 
-class HighlightingTest extends \PHPUnit_Framework_TestCase
+class HighlightingTest extends TestCase
 {
     /**
      * @var Highlighting
@@ -192,10 +193,12 @@ class HighlightingTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(6, $this->hlt->getField('fieldA')->getSnippets());
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddFieldWithObjectWithoutName()
     {
         $field = new Field;
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->hlt->addField($field);
     }
 

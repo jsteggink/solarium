@@ -31,6 +31,7 @@
 
 namespace Solarium\Tests\Plugin\CustomizeRequest;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Plugin\CustomizeRequest\CustomizeRequest;
 use Solarium\Plugin\CustomizeRequest\Customization;
 use Solarium\Core\Client\Client;
@@ -39,7 +40,7 @@ use Solarium\Core\Client\Response;
 use Solarium\Core\Client\Endpoint;
 use Solarium\Core\Event\PreExecuteRequest as PreExecuteRequestEvent;
 
-class CustomizeRequestTest extends \PHPUnit_Framework_TestCase
+class CustomizeRequestTest extends TestCase
 {
     /**
      * @var CustomizeRequest
@@ -110,7 +111,7 @@ class CustomizeRequestTest extends \PHPUnit_Framework_TestCase
         $expectedRequest = new Request();
         $expectedRequest->addParam('xid', 123); // this should be the effect of the customization
 
-        $observer = $this->getMock('Solarium\Core\Client\Adapter\Http', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Adapter\Http', array('execute'));
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($expectedRequest))
@@ -178,14 +179,19 @@ class CustomizeRequestTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddCustomizationWithoutKey()
     {
         $customization = new Customization;
 
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->plugin->addCustomization($customization);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddCustomizationWithUsedKey()
     {
         $customization1 = new Customization;
@@ -195,7 +201,6 @@ class CustomizeRequestTest extends \PHPUnit_Framework_TestCase
         $customization2->setKey('id1')->setName('test2');
 
         $this->plugin->addCustomization($customization1);
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->plugin->addCustomization($customization2);
     }
 
@@ -372,6 +377,9 @@ class CustomizeRequestTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\RuntimeException
+     */
     public function testPreExecuteRequestWithInvalidCustomization()
     {
         $input = array(
@@ -385,7 +393,6 @@ class CustomizeRequestTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $event = new PreExecuteRequestEvent($request, new Endpoint);
 
-        $this->setExpectedException('Solarium\Exception\RuntimeException');
         $this->plugin->preExecuteRequest($event);
     }
 

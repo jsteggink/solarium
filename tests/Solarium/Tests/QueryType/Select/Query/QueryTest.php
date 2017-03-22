@@ -31,6 +31,7 @@
 
 namespace Solarium\Tests\QueryType\Select\Query;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Query;
 
 class QueryTest extends AbstractQueryTest

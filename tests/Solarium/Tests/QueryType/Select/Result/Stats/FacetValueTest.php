@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Stats;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Stats\FacetValue;
 
-class FacetValueTest extends \PHPUnit_Framework_TestCase
+class FacetValueTest extends TestCase
 {
     /**
      * @var FacetValue

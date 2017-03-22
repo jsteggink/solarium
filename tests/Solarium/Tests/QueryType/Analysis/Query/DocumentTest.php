@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Analysis\Query;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Analysis\Query\Document;
 use Solarium\QueryType\Select\Result\Document as ReadOnlyDocument;
 use Solarium\Core\Client\Client;
 
-class DocumentTest extends \PHPUnit_Framework_TestCase
+class DocumentTest extends TestCase
 {
     /**
      * @var Document

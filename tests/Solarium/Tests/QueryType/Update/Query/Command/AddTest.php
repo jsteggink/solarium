@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Update\Query\Command;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Update\Query\Command\Add;
 use Solarium\QueryType\Update\Query\Query;
 use Solarium\QueryType\Update\Query\Document\Document;
 
-class AddTest extends \PHPUnit_Framework_TestCase
+class AddTest extends TestCase
 {
     protected $command;
 

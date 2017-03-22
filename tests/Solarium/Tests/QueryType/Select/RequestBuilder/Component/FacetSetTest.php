@@ -31,6 +31,7 @@
 
 namespace Solarium\Tests\QueryType\Select\RequestBuilder\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\RequestBuilder\Component\FacetSet as RequestBuilder;
 use Solarium\QueryType\Select\Query\Component\FacetSet as Component;
 use Solarium\Core\Client\Request;
@@ -41,7 +42,7 @@ use Solarium\QueryType\Select\Query\Component\Facet\Range as FacetRange;
 use Solarium\QueryType\Select\Query\Component\Facet\Pivot as FacetPivot;
 use Solarium\QueryType\Select\Query\Component\Facet\Interval as FacetInterval;
 
-class FacetSetTest extends \PHPUnit_Framework_TestCase
+class FacetSetTest extends TestCase
 {
     /**
      * @var RequestBuilder
@@ -177,10 +178,12 @@ class FacetSetTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\UnexpectedValueException
+     */
     public function testBuildUnknownFacetType()
     {
         $this->component->addFacet(new UnknownFacet(array('key' => 'f1', 'field' => 'owner')));
-        $this->setExpectedException('Solarium\Exception\UnexpectedValueException');
         $request = $this->builder->buildComponent($this->component, $this->request);
         $request->getUri();
     }

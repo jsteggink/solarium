@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Debug;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Debug\Detail;
 
-class DetailTest extends \PHPUnit_Framework_TestCase
+class DetailTest extends TestCase
 {
     /**
      * @var Detail

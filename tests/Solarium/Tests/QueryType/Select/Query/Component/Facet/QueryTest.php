@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Select\Query\Component\Facet;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Component\Facet\Query;
 use Solarium\QueryType\Select\Query\Component\FacetSet;
 
-class QueryTest extends \PHPUnit_Framework_TestCase
+class QueryTest extends TestCase
 {
     /**
      * @var Query

@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Select\RequestBuilder\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\RequestBuilder\Component\Stats as RequestBuilder;
 use Solarium\QueryType\Select\Query\Component\Stats\Stats as Component;
 use Solarium\Core\Client\Request;
 
-class StatsTest extends \PHPUnit_Framework_TestCase
+class StatsTest extends TestCase
 {
     public function testBuildComponent()
     {

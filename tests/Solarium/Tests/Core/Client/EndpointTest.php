@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\Core\Client;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Endpoint;
 
-class EndpointTest extends \PHPUnit_Framework_TestCase
+class EndpointTest extends TestCase
 {
     /**
      * @var Endpoint
@@ -48,6 +49,7 @@ class EndpointTest extends \PHPUnit_Framework_TestCase
     public function testConfigMode()
     {
         $options = array(
+            'key'    => 'mycore',
             'scheme' => 'http',
             'host' => '192.168.0.1',
             'port' => 123,
@@ -110,14 +112,14 @@ class EndpointTest extends \PHPUnit_Framework_TestCase
     {
         $this->endpoint->setHost('myserver')->setPath('/mypath')->setPort(123);
 
-        $this->assertEquals('http://myserver:123/mypath/', $this->endpoint->getBaseUri());
+        $this->assertEquals('http://myserver:123/mypath/collection1/', $this->endpoint->getBaseUri());
     }
 
     public function testGetBaseUriWithHttps()
     {
         $this->endpoint->setScheme('https')->setHost('myserver')->setPath('/mypath')->setPort(123);
 
-        $this->assertEquals('https://myserver:123/mypath/', $this->endpoint->getBaseUri());
+        $this->assertEquals('https://myserver:123/mypath/collection1/', $this->endpoint->getBaseUri());
     }
 
     public function testGetBaseUriWithCore()
@@ -146,6 +148,7 @@ class EndpointTest extends \PHPUnit_Framework_TestCase
     public function testToString()
     {
         $options = array(
+            'key'  => 'mycore',
             'host' => '192.168.0.1',
             'port' => 123,
             'path' => '/mysolr/',

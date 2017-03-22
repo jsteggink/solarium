@@ -2,26 +2,27 @@
 
 namespace Solarium\Tests\Support\DataFixtures;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Support\DataFixtures\Executor;
 
-class ExecutorTest extends \PHPUnit_Framework_TestCase
+class ExecutorTest extends TestCase
 {
     public function testLoad()
     {
-        $solarium = $this->getMock('Solarium\Core\Client\ClientInterface');
+        $solarium = $this->createMock('Solarium\Core\Client\ClientInterface');
 
         $mockFixtures = array(
-            $this->getMockFixture($solarium),
-            $this->getMockFixture($solarium),
+            $this->createMockFixture($solarium),
+            $this->createMockFixture($solarium),
         );
 
         $executor = new Executor($solarium);
         $executor->execute($mockFixtures);
     }
 
-    private function getMockFixture($client)
+    private function createMockFixture($client)
     {
-        $fixture = $this->getMock('Solarium\Support\DataFixtures\FixtureInterface');
+        $fixture = $this->createMock('Solarium\Support\DataFixtures\FixtureInterface');
         $fixture->expects($this->once())
             ->method('load')
             ->with($client);

@@ -31,13 +31,14 @@
 
 namespace Solarium\Tests\Core\Query\Result;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Client;
 use Solarium\Core\Client\Response;
 use Solarium\Core\Query\Result\QueryType as QueryTypeResult;
 use Solarium\QueryType\Select\Query\Query as SelectQuery;
 use Solarium\QueryType\Update\Query\Query as UpdateQuery;
 
-class QueryTypeTest extends \PHPUnit_Framework_TestCase
+class QueryTypeTest extends TestCase
 {
     /**
      * @var QueryTypeDummy
@@ -52,6 +53,9 @@ class QueryTypeTest extends \PHPUnit_Framework_TestCase
         $this->result = new QueryTypeDummy($client, $query, $response);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\UnexpectedValueException
+     */
     public function testParseResponse()
     {
         $client = new Client;
@@ -59,7 +63,6 @@ class QueryTypeTest extends \PHPUnit_Framework_TestCase
         $response = new Response('{"responseHeader":{"status":1,"QTime":12}}', array('HTTP 1.1 200 OK'));
         $result = new QueryTypeDummy($client, $query, $response);
 
-        $this->setExpectedException('Solarium\Exception\UnexpectedValueException');
         $result->parse();
     }
 

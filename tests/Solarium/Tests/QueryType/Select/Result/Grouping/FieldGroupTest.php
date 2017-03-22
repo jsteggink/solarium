@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Grouping;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Grouping\FieldGroup;
 
-class FieldGroupTest extends \PHPUnit_Framework_TestCase
+class FieldGroupTest extends TestCase
 {
     /**
      * @var FieldGroup

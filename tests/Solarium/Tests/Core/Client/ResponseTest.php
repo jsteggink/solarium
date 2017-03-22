@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\Core\Client;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Response;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends TestCase
 {
     protected $headers;
     protected $data;
@@ -71,11 +72,13 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->data, $this->response->getBody());
     }
 
+    /**
+     * @expectedException \Solarium\Exception\HttpException
+     */
     public function testMissingHeader()
     {
         $headers = array();
 
-        $this->setExpectedException('Solarium\Exception\HttpException');
         new Response($this->data, $headers);
     }
 }

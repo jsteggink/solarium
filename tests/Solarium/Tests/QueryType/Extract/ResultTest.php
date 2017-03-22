@@ -31,6 +31,7 @@
 
 namespace Solarium\Tests\QueryType\Extract;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Extract\Result as ExtractResult;
 use Solarium\Tests\QueryType\Update\AbstractResultTest;
 

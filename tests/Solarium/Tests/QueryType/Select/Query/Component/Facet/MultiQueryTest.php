@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Select\Query\Component\Facet;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Component\Facet\MultiQuery;
 use Solarium\QueryType\Select\Query\Component\Facet\Query;
 use Solarium\QueryType\Select\Query\Component\FacetSet;
 
-class MultiQueryTest extends \PHPUnit_Framework_TestCase
+class MultiQueryTest extends TestCase
 {
     /**
      * @var MultiQuery
@@ -154,6 +155,9 @@ class MultiQueryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddQueryNoKey()
     {
         $query = 'category:1';
@@ -163,10 +167,12 @@ class MultiQueryTest extends \PHPUnit_Framework_TestCase
         $facetQuery->setQuery($query);
         $facetQuery->setExcludes($excludes);
 
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->facet->addQuery($facetQuery);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddQueryNoUniqueKey()
     {
         $facetQuery1 = new Query;
@@ -178,8 +184,6 @@ class MultiQueryTest extends \PHPUnit_Framework_TestCase
         $facetQuery2->setQuery('category:2');
 
         $this->facet->addQuery($facetQuery1);
-
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->facet->addQuery($facetQuery2);
     }
 

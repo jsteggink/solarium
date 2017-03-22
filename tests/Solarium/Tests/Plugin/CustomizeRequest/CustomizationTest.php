@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\Plugin\CustomizeRequest;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Plugin\CustomizeRequest\Customization;
 
-class CustomizationTest extends \PHPUnit_Framework_TestCase
+class CustomizationTest extends TestCase
 {
     /**
      * @var Customization

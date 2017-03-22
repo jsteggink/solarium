@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Select\ResponseParser\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\ResponseParser\Component\Debug as Parser;
 use Solarium\QueryType\Select\Result\Debug\Detail;
 
-class DebugTest extends \PHPUnit_Framework_TestCase
+class DebugTest extends TestCase
 {
     /**
      * @var Parser

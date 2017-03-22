@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Select\RequestBuilder\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\RequestBuilder\Component\DisMax as RequestBuilder;
 use Solarium\QueryType\Select\Query\Component\DisMax as Component;
 use Solarium\Core\Client\Request;
 
-class DisMaxTest extends \PHPUnit_Framework_TestCase
+class DisMaxTest extends TestCase
 {
     public function testBuildComponent()
     {

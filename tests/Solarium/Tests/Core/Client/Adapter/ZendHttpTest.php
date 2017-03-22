@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\Core\Client\Adapter;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Adapter\ZendHttp as ZendHttpAdapter;
 use Solarium\Core\Client\Request;
 use Solarium\Core\Client\Endpoint;
 
-class ZendHttpTest extends \PHPUnit_Framework_TestCase
+class ZendHttpTest extends TestCase
 {
     /**
      * @var ZendHttpAdapter
@@ -58,7 +59,7 @@ class ZendHttpTest extends \PHPUnit_Framework_TestCase
         $options = array('optionZ' => 123, 'options' => array('optionX' => 'Y'));
         $adapterOptions = array('optionX' => 'Y');
 
-        $mock = $this->getMock('Zend_Http_Client');
+        $mock = $this->createMock('Zend_Http_Client');
         $mock->expects($this->once())
                  ->method('setConfig')
                  ->with($this->equalTo($adapterOptions));
@@ -110,13 +111,13 @@ class ZendHttpTest extends \PHPUnit_Framework_TestCase
 
         $response = new \Zend_Http_Response(200, array('status' => 'HTTP 1.1 200 OK'), $responseData);
 
-        $mock = $this->getMock('Zend_Http_Client');
+        $mock = $this->createMock('Zend_Http_Client');
         $mock->expects($this->once())
                  ->method('setMethod')
                  ->with($this->equalTo($method));
         $mock->expects($this->once())
                  ->method('setUri')
-                 ->with($this->equalTo('http://127.0.0.1:8983/solr/myhandler'));
+                 ->with($this->equalTo('http://127.0.0.1:8983/solr/collection1/myhandler'));
         $mock->expects($this->once())
                  ->method('setHeaders')
                  ->with($this->equalTo(array('X-test: 123')));
@@ -158,13 +159,13 @@ class ZendHttpTest extends \PHPUnit_Framework_TestCase
 
         $response = new \Zend_Http_Response(200, array('status' => 'HTTP 1.1 200 OK'), $responseData);
 
-        $mock = $this->getMock('Zend_Http_Client');
+        $mock = $this->createMock('Zend_Http_Client');
         $mock->expects($this->once())
                  ->method('setMethod')
                  ->with($this->equalTo($method));
         $mock->expects($this->once())
                  ->method('setUri')
-                 ->with($this->equalTo('http://127.0.0.1:8983/solr/myhandler'));
+                 ->with($this->equalTo('http://127.0.0.1:8983/solr/collection1/myhandler'));
         $mock->expects($this->once())
                  ->method('setHeaders')
                  ->with($this->equalTo(array('X-test: 123', 'Content-Type: text/xml; charset=UTF-8')));
@@ -187,20 +188,22 @@ class ZendHttpTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\HttpException
+     */
     public function testExecuteErrorResponse()
     {
         $request = new Request();
         $response = new \Zend_Http_Response(404, array(), '');
         $endpoint = new Endpoint();
 
-        $mock = $this->getMock('Zend_Http_Client');
+        $mock = $this->createMock('Zend_Http_Client');
         $mock->expects($this->once())
                  ->method('request')
                  ->will($this->returnValue($response));
 
         $this->adapter->setZendHttp($mock);
 
-        $this->setExpectedException('Solarium\Exception\HttpException');
         $this->adapter->execute($request, $endpoint);
 
     }
@@ -212,7 +215,7 @@ class ZendHttpTest extends \PHPUnit_Framework_TestCase
         $response = new \Zend_Http_Response(200, array('status' => 'HTTP 1.1 200 OK'), 'data');
         $endpoint = new Endpoint();
 
-        $mock = $this->getMock('Zend_Http_Client');
+        $mock = $this->createMock('Zend_Http_Client');
         $mock->expects($this->once())
                  ->method('request')
                  ->will($this->returnValue($response));
@@ -226,13 +229,15 @@ class ZendHttpTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\OutOfBoundsException
+     */
     public function testExecuteWithInvalidMethod()
     {
         $request = new Request();
         $request->setMethod('invalid');
         $endpoint = new Endpoint();
 
-        $this->setExpectedException('Solarium\Exception\OutOfBoundsException');
         $this->adapter->execute($request, $endpoint);
     }
 
@@ -244,7 +249,7 @@ class ZendHttpTest extends \PHPUnit_Framework_TestCase
         $endpoint = new Endpoint();
         $response = new \Zend_Http_Response(200, array('status' => 'HTTP 1.1 200 OK'), 'dummy');
 
-        $mock = $this->getMock('Zend_Http_Client');
+        $mock = $this->createMock('Zend_Http_Client');
         $mock->expects($this->once())
              ->method('setFileUpload')
              ->with(

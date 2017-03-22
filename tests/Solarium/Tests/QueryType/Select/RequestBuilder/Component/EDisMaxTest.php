@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\Select\RequestBuilder\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\RequestBuilder\Component\EdisMax as RequestBuilder;
 use Solarium\QueryType\Select\Query\Component\EdisMax as Component;
 use Solarium\Core\Client\Request;
 
-class EDisMaxTest extends \PHPUnit_Framework_TestCase
+class EDisMaxTest extends TestCase
 {
     public function testBuildComponent()
     {

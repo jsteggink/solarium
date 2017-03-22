@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Spellcheck;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Spellcheck\Collation;
 
-class CollationTest extends \PHPUnit_Framework_TestCase
+class CollationTest extends TestCase
 {
     /**
      * @var Collation

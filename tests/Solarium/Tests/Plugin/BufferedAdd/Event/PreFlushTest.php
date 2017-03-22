@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\Plugin\BufferedAdd\Event;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Plugin\BufferedAdd\Event\PreFlush;
 
-class PreFlushTest extends \PHPUnit_Framework_TestCase
+class PreFlushTest extends TestCase
 {
     public function testConstructorAndGetters()
     {

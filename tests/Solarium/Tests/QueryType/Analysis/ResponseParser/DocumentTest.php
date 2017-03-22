@@ -31,7 +31,9 @@
 
 namespace Solarium\Tests\QueryType\Analysis\ResponseParser;
 
-class DocumentTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class DocumentTest extends TestCase
 {
     public function testParse()
     {
@@ -46,12 +48,12 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $resultStub = $this->getMock('Solarium\Core\Query\Result\Result', array(), array(), '', false);
+        $resultStub = $this->createMock('Solarium\Core\Query\Result\Result', array(), array(), '', false);
         $resultStub->expects($this->once())
              ->method('getData')
              ->will($this->returnValue($data));
 
-        $parserStub = $this->getMock('Solarium\QueryType\Analysis\ResponseParser\Document', array('parseTypes'));
+        $parserStub = $this->createMock('Solarium\QueryType\Analysis\ResponseParser\Document', array('parseTypes'));
         $parserStub->expects($this->exactly(2))
              ->method('parseTypes')
              ->will($this->returnValue('dummy'));

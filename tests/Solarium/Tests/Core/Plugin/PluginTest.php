@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\Core\Plugin;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Plugin\AbstractPlugin;
 
-class PluginTest extends \PHPUnit_Framework_TestCase
+class PluginTest extends TestCase
 {
     /**
      * @var AbstractPlugin

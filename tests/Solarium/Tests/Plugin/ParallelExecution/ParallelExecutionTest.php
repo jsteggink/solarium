@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\Plugin\ParallelExecution;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Plugin\ParallelExecution\ParallelExecution;
 use Solarium\Core\Client\Client;
 
-class ParallelExecutionTest extends \PHPUnit_Framework_TestCase
+class ParallelExecutionTest extends TestCase
 {
     /**
      * @var ParallelExecution

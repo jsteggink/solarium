@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Select\Query\Component\Facet;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Component\Facet\Interval;
 use Solarium\QueryType\Select\Query\Component\FacetSet;
 
-class IntervalTest extends \PHPUnit_Framework_TestCase
+class IntervalTest extends TestCase
 {
     /**
      * @var Query

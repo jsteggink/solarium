@@ -31,6 +31,7 @@
 
 namespace Solarium\Tests\QueryType\Update;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Request;
 use Solarium\QueryType\Update\Query\Command\Add as AddCommand;
 use Solarium\QueryType\Update\Query\Command\Commit as CommitCommand;
@@ -41,7 +42,7 @@ use Solarium\QueryType\Update\Query\Document\Document;
 use Solarium\QueryType\Update\Query\Query;
 use Solarium\QueryType\Update\RequestBuilder;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends TestCase
 {
     /**
      * @var Query
@@ -467,11 +468,12 @@ class RequestBuilderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\RuntimeException
+     */
     public function testInvalidCommandInRequest()
     {
         $this->query->add('invalidcommand', new InvalidCommand);
-
-        $this->setExpectedException('Solarium\Exception\RuntimeException');
         $this->builder->build($this->query);
     }
 }

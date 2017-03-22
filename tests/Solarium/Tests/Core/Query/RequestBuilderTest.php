@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\Core\Query;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Query\AbstractRequestBuilder;
 use Solarium\QueryType\Select\Query\Query as SelectQuery;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends TestCase
 {
     /**
      * @var TestRequestBuilder

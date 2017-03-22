@@ -31,12 +31,13 @@
 
 namespace Solarium\Tests\QueryType\Select\ResponseParser;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\FacetSet;
 use Solarium\QueryType\Select\ResponseParser\ResponseParser;
 use Solarium\QueryType\Update\Query\Document\Document;
 
-class ResponseParserTest extends \PHPUnit_Framework_TestCase
+class ResponseParserTest extends TestCase
 {
     public function testParse()
     {
@@ -58,7 +59,7 @@ class ResponseParserTest extends \PHPUnit_Framework_TestCase
         $query = new Query(array('documentclass' => 'Solarium\QueryType\Update\Query\Document\Document'));
         $query->getFacetSet();
 
-        $resultStub = $this->getMock('Solarium\QueryType\Select\Result\Result', array(), array(), '', false);
+        $resultStub = $this->createMock('Solarium\QueryType\Select\Result\Result');
         $resultStub->expects($this->once())
              ->method('getData')
              ->will($this->returnValue($data));
@@ -105,7 +106,7 @@ class ResponseParserTest extends \PHPUnit_Framework_TestCase
         $query = new Query(array('documentclass' => 'Solarium\QueryType\Update\Query\Document\Document'));
         $query->getFacetSet();
 
-        $resultStub = $this->getMock('Solarium\QueryType\Select\Result\Result', array(), array(), '', false);
+        $resultStub = $this->createMock('Solarium\QueryType\Select\Result\Result', array(), array(), '', false);
         $resultStub->expects($this->once())
              ->method('getData')
              ->will($this->returnValue($data));
@@ -133,6 +134,9 @@ class ResponseParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($components, $result['components']);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\RuntimeException
+     */
     public function testParseWithInvalidDocumentClass()
     {
         $data = array(
@@ -152,7 +156,7 @@ class ResponseParserTest extends \PHPUnit_Framework_TestCase
         $query = new Query(array('documentclass' => 'StdClass'));
         $query->getFacetSet();
 
-        $resultStub = $this->getMock('Solarium\QueryType\Select\Result\Result', array(), array(), '', false);
+        $resultStub = $this->createMock('Solarium\QueryType\Select\Result\Result', array(), array(), '', false);
         $resultStub->expects($this->once())
              ->method('getData')
              ->will($this->returnValue($data));
@@ -161,8 +165,6 @@ class ResponseParserTest extends \PHPUnit_Framework_TestCase
              ->will($this->returnValue($query));
 
         $parser = new ResponseParser();
-
-        $this->setExpectedException('Solarium\Exception\RuntimeException');
         $parser->parse($resultStub);
     }
 
@@ -184,7 +186,7 @@ class ResponseParserTest extends \PHPUnit_Framework_TestCase
         $query = new Query(array('documentclass' => 'Solarium\QueryType\Update\Query\Document\Document'));
         $query->getFacetSet();
 
-        $resultStub = $this->getMock('Solarium\QueryType\Select\Result\Result', array(), array(), '', false);
+        $resultStub = $this->createMock('Solarium\QueryType\Select\Result\Result', array(), array(), '', false);
         $resultStub->expects($this->once())
              ->method('getData')
              ->will($this->returnValue($data));

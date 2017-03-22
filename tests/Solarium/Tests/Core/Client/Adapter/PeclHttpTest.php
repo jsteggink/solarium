@@ -31,12 +31,13 @@
 
 namespace Solarium\Tests\Core\Client\Adapter;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Adapter\PeclHttp as PeclHttpAdapter;
 use Solarium\Core\Client\Request;
 use Solarium\Core\Client\Endpoint;
 use Solarium\Exception\ExceptionInterface;
 
-class PeclHttpTest extends \PHPUnit_Framework_TestCase
+class PeclHttpTest extends TestCase
 {
     /**
      * @var PeclHttpAdapter
@@ -199,11 +200,11 @@ EOF;
         $request = new Request();
         $endpoint = new Endpoint();
 
-        $mockHttpRequest = $this->getMock('HttpRequest');
+        $mockHttpRequest = $this->createMock('HttpRequest');
         $mockHttpRequest->expects($this->once())
                         ->method('send')
                         ->will($this->returnValue(\HttpMessage::factory($data)));
-        $mock = $this->getMock('Solarium\Core\Client\Adapter\PeclHttp', array('toHttpRequest'));
+        $mock = $this->createMock('Solarium\Core\Client\Adapter\PeclHttp', array('toHttpRequest'));
         $mock->expects($this->once())
              ->method('toHttpRequest')
              ->with($request, $endpoint)

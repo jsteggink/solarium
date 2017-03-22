@@ -31,12 +31,13 @@
 
 namespace Solarium\Tests\Core\Event;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Event\PostExecuteRequest;
 use Solarium\Core\Client\Client;
 use Solarium\Core\Client\Request;
 use Solarium\Core\Client\Response;
 
-class PostExecuteRequestTest extends \PHPUnit_Framework_TestCase
+class PostExecuteRequestTest extends TestCase
 {
     public function testConstructorAndGetters()
     {

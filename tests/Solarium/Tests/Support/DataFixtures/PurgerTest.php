@@ -2,15 +2,16 @@
 
 namespace Solarium\Tests\Support\DataFixtures;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Support\DataFixtures\Purger;
 
-class PurgerTest extends \PHPUnit_Framework_TestCase
+class PurgerTest extends TestCase
 {
     public function testPurge()
     {
-        $solarium = $this->getMock('Solarium\Core\Client\ClientInterface');
+        $solarium = $this->createMock('Solarium\Core\Client\ClientInterface');
 
-        $update = $this->getMock('\Solarium\QueryType\Update\Query\Query');
+        $update = $this->createMock('\Solarium\QueryType\Update\Query\Query');
         $update->expects($this->once())
             ->method('addDeleteQuery')
             ->with('*:*');

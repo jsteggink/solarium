@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\Plugin\BufferedAdd\Event;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Plugin\BufferedAdd\Event\PreCommit;
 
-class PreCommitTest extends \PHPUnit_Framework_TestCase
+class PreCommitTest extends TestCase
 {
     public function testConstructorAndGetters()
     {

@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\MoreLikeThis;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\MoreLikeThis\Query;
 use Solarium\QueryType\MoreLikeThis\ResponseParser;
 
-class ResponseParserTest extends \PHPUnit_Framework_TestCase
+class ResponseParserTest extends TestCase
 {
     public function testParse()
     {
@@ -64,7 +65,7 @@ class ResponseParserTest extends \PHPUnit_Framework_TestCase
         $query->setInterestingTerms('details');
         $query->setMatchInclude(true);
 
-        $resultStub = $this->getMock('Solarium\QueryType\MoreLikeThis\Result', array(), array(), '', false);
+        $resultStub = $this->createMock('Solarium\QueryType\MoreLikeThis\Result', array(), array(), '', false);
         $resultStub->expects($this->any())
              ->method('getData')
              ->will($this->returnValue($data));

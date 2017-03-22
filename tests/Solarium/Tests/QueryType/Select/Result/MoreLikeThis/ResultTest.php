@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\MoreLikeThis;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Document;
 use Solarium\QueryType\Select\Result\MoreLikeThis\Result;
 
-class ResultTest extends \PHPUnit_Framework_TestCase
+class ResultTest extends TestCase
 {
     /**
      * @var Result

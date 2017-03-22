@@ -31,12 +31,13 @@
 
 namespace Solarium\Tests\QueryType\Update;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Response;
 use Solarium\QueryType\Update\Result;
 use Solarium\QueryType\Update\ResponseParser;
 use Solarium\QueryType\Select\Query\Query as SelectQuery;
 
-class ResponseParserTest extends \PHPUnit_Framework_TestCase
+class ResponseParserTest extends TestCase
 {
     public function testParse()
     {

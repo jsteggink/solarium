@@ -31,12 +31,13 @@
 
 namespace Solarium\Tests\QueryType\Analysis\RequestBuilder;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Analysis\Query\Document;
 use Solarium\QueryType\Analysis\RequestBuilder\Document as DocumentBuilder;
 use Solarium\Core\Client\Request;
 use Solarium\QueryType\Update\Query\Document\Document as InputDocument;
 
-class DocumentTest extends \PHPUnit_Framework_TestCase
+class DocumentTest extends TestCase
 {
     /**
      * @var Document

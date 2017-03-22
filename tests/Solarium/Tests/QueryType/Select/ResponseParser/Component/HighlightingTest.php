@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Select\ResponseParser\Component;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\ResponseParser\Component\Highlighting as Parser;
 use Solarium\QueryType\Select\Result\Highlighting\Result;
 
-class HighlightingTest extends \PHPUnit_Framework_TestCase
+class HighlightingTest extends TestCase
 {
     protected $parser;
 

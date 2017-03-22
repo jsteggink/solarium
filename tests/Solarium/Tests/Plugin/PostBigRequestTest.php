@@ -31,13 +31,14 @@
 
 namespace Solarium\Tests\Plugin;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Plugin\PostBigRequest;
 use Solarium\Core\Client\Client;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\Core\Client\Request;
 use Solarium\Core\Event\PostCreateRequest as PostCreateRequestEvent;
 
-class PostBigRequestTest extends \PHPUnit_Framework_TestCase
+class PostBigRequestTest extends TestCase
 {
     /**
      * @var PostBigRequest

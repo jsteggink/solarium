@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Spellcheck;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Spellcheck\Result;
 
-class SpellcheckTest extends \PHPUnit_Framework_TestCase
+class SpellcheckTest extends TestCase
 {
     /**
      * @var Result

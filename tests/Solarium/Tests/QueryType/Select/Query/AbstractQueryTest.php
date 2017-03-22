@@ -31,12 +31,13 @@
 
 namespace Solarium\Tests\QueryType\Select\Query;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Query\FilterQuery;
 use Solarium\Core\Client\Client;
 use Solarium\QueryType\Select\Query\Component\MoreLikeThis;
 
-abstract class AbstractQueryTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractQueryTest extends TestCase
 {
     /**
      * @var Query
@@ -276,15 +277,19 @@ abstract class AbstractQueryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddFilterQueryWithoutKey()
     {
         $fq = new FilterQuery;
         $fq->setQuery('category:1');
-
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->query->addFilterQuery($fq);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddFilterQueryWithUsedKey()
     {
         $fq1 = new FilterQuery;
@@ -294,7 +299,6 @@ abstract class AbstractQueryTest extends \PHPUnit_Framework_TestCase
         $fq2->setKey('fq1')->setQuery('category:2');
 
         $this->query->addFilterQuery($fq1);
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->query->addFilterQuery($fq2);
     }
 
@@ -525,9 +529,11 @@ abstract class AbstractQueryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\OutOfBoundsException
+     */
     public function testGetInvalidComponentAutoload()
     {
-        $this->setExpectedException('Solarium\Exception\OutOfBoundsException');
         $this->query->getComponent('invalid', true);
     }
 

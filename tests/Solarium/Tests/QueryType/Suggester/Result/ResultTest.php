@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Suggester\Result;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Suggester\Result\Result;
 
-class ResultTest extends \PHPUnit_Framework_TestCase
+class ResultTest extends TestCase
 {
     /**
      * @var SuggesterDummy

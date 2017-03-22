@@ -35,6 +35,7 @@
 
 namespace Solarium\Tests\Core\Client\Adapter;
 
+use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -50,7 +51,7 @@ use Solarium\Core\Exception;
  * @covers ::<private>
  * @covers ::getGuzzleClient
  */
-final class GuzzleAdapterTest extends \PHPUnit_Framework_TestCase
+final class GuzzleAdapterTest extends TestCase
 {
     /**
      * Prepare each test.

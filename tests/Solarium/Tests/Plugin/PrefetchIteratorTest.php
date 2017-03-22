@@ -31,13 +31,14 @@
 
 namespace Solarium\Tests\Plugin;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Document;
 use Solarium\QueryType\Select\Query\Query;
 use Solarium\QueryType\Select\Result\Result;
 use Solarium\Core\Client\Client;
 use Solarium\Plugin\PrefetchIterator;
 
-class PrefetchIteratorTest extends \PHPUnit_Framework_TestCase
+class PrefetchIteratorTest extends TestCase
 {
     /**
      * @var PrefetchIterator
@@ -78,7 +79,7 @@ class PrefetchIteratorTest extends \PHPUnit_Framework_TestCase
     public function testCount()
     {
         $result = $this->getResult();
-        $mockClient = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $mockClient = $this->createMock('Solarium\Core\Client\Client', array('execute'));
         $mockClient->expects($this->exactly(1))
                    ->method('execute')
                    ->with($this->equalTo($this->query), $this->equalTo(null))
@@ -92,7 +93,7 @@ class PrefetchIteratorTest extends \PHPUnit_Framework_TestCase
     public function testIteratorAndRewind()
     {
         $result = $this->getResult();
-        $mockClient = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $mockClient = $this->createMock('Solarium\Core\Client\Client', array('execute'));
 
         // Important: if prefetch or query settings are not changed, the query should be executed only once!
         $mockClient->expects($this->exactly(1))->method('execute')->will($this->returnValue($result));
@@ -118,7 +119,7 @@ class PrefetchIteratorTest extends \PHPUnit_Framework_TestCase
     public function testIteratorResetOnSetPrefetch()
     {
         $result = $this->getResult();
-        $mockClient = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $mockClient = $this->createMock('Solarium\Core\Client\Client', array('execute'));
         $mockClient->expects($this->exactly(2))->method('execute')->will($this->returnValue($result));
 
         $this->plugin->initPlugin($mockClient, array());
@@ -144,7 +145,7 @@ class PrefetchIteratorTest extends \PHPUnit_Framework_TestCase
     public function testIteratorResetOnSetQuery()
     {
         $result = $this->getResult();
-        $mockClient = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $mockClient = $this->createMock('Solarium\Core\Client\Client', array('execute'));
         $mockClient->expects($this->exactly(2))->method('execute')->will($this->returnValue($result));
 
         $this->plugin->initPlugin($mockClient, array());
@@ -192,7 +193,7 @@ class PrefetchIteratorTest extends \PHPUnit_Framework_TestCase
     public function testWithSpecificEndpoint()
     {
         $result = $this->getResult();
-        $mockClient = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $mockClient = $this->createMock('Solarium\Core\Client\Client', array('execute'));
         $mockClient->expects($this->exactly(1))
                    ->method('execute')
                    ->with($this->equalTo($this->query), $this->equalTo('s2'))
@@ -206,7 +207,7 @@ class PrefetchIteratorTest extends \PHPUnit_Framework_TestCase
     public function testWithSpecificEndpointOption()
     {
         $result = $this->getResult();
-        $mockClient = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $mockClient = $this->createMock('Solarium\Core\Client\Client', array('execute'));
         $mockClient->expects($this->exactly(1))
                    ->method('execute')
                    ->with($this->equalTo($this->query), $this->equalTo('s3'))

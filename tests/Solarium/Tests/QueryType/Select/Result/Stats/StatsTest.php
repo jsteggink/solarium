@@ -31,27 +31,29 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Stats;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Stats\Stats;
 
-class StatsTest extends \PHPUnit_Framework_TestCase
+class StatsTest extends TestCase
 {
     /**
      * @var Stats
      */
     protected $result;
+    protected $testData;
 
     public function setUp()
     {
-        $this->data = array(
+        $this->testData = array(
             'key1' => 'value1',
             'key2' => 'value2',
         );
-        $this->result = new Stats($this->data);
+        $this->result = new Stats($this->testData);
     }
 
     public function testGetResult()
     {
-         $this->assertEquals($this->data['key1'], $this->result->getResult('key1'));
+         $this->assertEquals($this->testData['key1'], $this->result->getResult('key1'));
     }
 
     public function testGetInvalidResult()
@@ -61,7 +63,7 @@ class StatsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetResults()
     {
-         $this->assertEquals($this->data, $this->result->getResults());
+         $this->assertEquals($this->testData, $this->result->getResults());
     }
 
     public function testIterator()
@@ -71,11 +73,11 @@ class StatsTest extends \PHPUnit_Framework_TestCase
             $items[$key] = $item;
         }
 
-        $this->assertEquals($this->data, $items);
+        $this->assertEquals($this->testData, $items);
     }
 
     public function testCount()
     {
-        $this->assertEquals(count($this->data), count($this->result));
+        $this->assertEquals(count($this->testData), count($this->result));
     }
 }

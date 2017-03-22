@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\Analysis\ResponseParser;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Analysis\ResponseParser\Field as FieldParser;
 use Solarium\QueryType\Analysis\Query\Field as Query;
 
-class FieldTest extends \PHPUnit_Framework_TestCase
+class FieldTest extends TestCase
 {
     public function testParse()
     {
@@ -76,7 +77,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $resultStub = $this->getMock('Solarium\Core\Query\Result\Result', array(), array(), '', false);
+        $resultStub = $this->createMock('Solarium\Core\Query\Result\Result');
         $resultStub->expects($this->once())
              ->method('getData')
              ->will($this->returnValue($data));
@@ -106,7 +107,7 @@ class FieldTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $resultStub = $this->getMock('Solarium\Core\Query\Result\Result', array(), array(), '', false);
+        $resultStub = $this->createMock('Solarium\Core\Query\Result\Result', array(), array(), '', false);
         $resultStub->expects($this->once())
              ->method('getData')
              ->will($this->returnValue($data));

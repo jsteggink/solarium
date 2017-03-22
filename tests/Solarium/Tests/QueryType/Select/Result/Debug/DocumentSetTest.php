@@ -31,9 +31,10 @@
 
 namespace Solarium\Tests\QueryType\Select\Result\Debug;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\Select\Result\Debug\DocumentSet;
 
-class DocumentSetTest extends \PHPUnit_Framework_TestCase
+class DocumentSetTest extends TestCase
 {
     /**
      * @var DocumentSet

@@ -31,11 +31,12 @@
 
 namespace Solarium\Tests\QueryType\RealtimeGet;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Request;
 use Solarium\QueryType\RealtimeGet\Query;
 use Solarium\QueryType\RealtimeGet\RequestBuilder;
 
-class RequestBuilderTest extends \PHPUnit_Framework_TestCase
+class RequestBuilderTest extends TestCase
 {
     public function testBuildSingleId()
     {

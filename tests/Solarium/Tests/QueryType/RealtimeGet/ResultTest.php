@@ -31,10 +31,11 @@
 
 namespace Solarium\Tests\QueryType\RealtimeGet;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\QueryType\RealtimeGet\Result;
 use Solarium\QueryType\Select\Result\Document;
 
-class ResultTest extends \PHPUnit_Framework_TestCase
+class ResultTest extends TestCase
 {
     protected $doc;
     protected $result;

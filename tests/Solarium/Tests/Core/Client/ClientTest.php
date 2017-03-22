@@ -31,6 +31,7 @@
 
 namespace Solarium\Tests\Core\Client;
 
+use PHPUnit\Framework\TestCase;
 use Solarium\Core\Client\Client;
 use Solarium\Core\Client\Request;
 use Solarium\Core\Client\Response;
@@ -60,7 +61,7 @@ use Solarium\Core\Event\PostExecuteRequest as PostExecuteRequestEvent;
 /**
  * @coversDefaultClass \Solarium\Core\Client\Client
  */
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * @var Client
@@ -121,14 +122,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetEventDispatcher() {
       $this->assertInstanceOf('\Symfony\Component\EventDispatcher\EventDispatcherInterface', $this->client->getEventDispatcher());
-        $eventDispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $eventDispatcher = $this->createMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
       $this->client->setEventDispatcher($eventDispatcher);
       $this->assertSame($eventDispatcher, $this->client->getEventDispatcher());
     }
 
     public function testEventDispatcherInjection()
     {
-        $eventDispatcher = $this->getMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $eventDispatcher = $this->createMock('\Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $client = new Client(null, $eventDispatcher);
         $this->assertSame($eventDispatcher, $client->getEventDispatcher());
     }
@@ -182,8 +183,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateEndpoint()
     {
-        $endpoint = $this->client->createEndpoint();
-        $this->assertEquals(null, $endpoint->getKey());
+        $endpoint = $this->client->createEndpoint('default');
+        $this->assertEquals('default', $endpoint->getKey());
         $this->assertThat($endpoint, $this->isInstanceOf('Solarium\Core\Client\Endpoint'));
     }
 
@@ -216,8 +217,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testAddAndGetEndpoint()
     {
-        $endpoint = $this->client->createEndpoint();
-        $endpoint->setKey('s3');
+        $endpoint = $this->client->createEndpoint('s3');
         $endpoint->setHost('s3.local');
         $this->client->clearEndpoints();
         $this->client->addEndpoint($endpoint);
@@ -250,18 +250,21 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddEndpointWithoutKey()
     {
         $endpoint = $this->client->createEndpoint();
-
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->client->addEndpoint($endpoint);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testAddEndpointWithDuplicateKey()
     {
         $this->client->createEndpoint('s1');
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->client->createEndpoint('s1');
     }
 
@@ -282,11 +285,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('s2.local', $endpoints['s2']->getHost());
     }
 
+    /**
+     * @expectedException \Solarium\Exception\OutOfBoundsException
+     */
     public function testGetEndpointWithInvalidKey()
     {
         $this->client->createEndpoint('s1');
-
-        $this->setExpectedException('Solarium\Exception\OutOfBoundsException');
         $this->client->getEndpoint('s2');
     }
 
@@ -371,9 +375,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($endpoint2, $this->client->getEndpoint());
     }
 
+    /**
+     * @expectedException \Solarium\Exception\OutOfBoundsException
+     */
     public function testSetDefaultEndpointWithInvalidKey()
     {
-        $this->setExpectedException('Solarium\Exception\OutOfBoundsException');
         $this->client->setDefaultEndpoint('invalidkey');
     }
 
@@ -398,17 +404,21 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertThat($this->client->getAdapter(), $this->isInstanceOf($adapterClass));
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testSetAndGetAdapterWithInvalidObject()
     {
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->client->setAdapter(new \stdClass());
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testSetAndGetAdapterWithInvalidString()
     {
         $adapterClass = '\\stdClass';
         $this->client->setAdapter($adapterClass);
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->client->getAdapter();
     }
 
@@ -420,7 +430,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             'customOption' => 'foobar',
         );
 
-        $observer = $this->getMock('Solarium\Core\Client\Adapter\Http', array('setOptions', 'execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Adapter\Http');
         $observer->expects($this->once())
                  ->method('setOptions')
                  ->with($this->equalTo($adapterOptions));
@@ -461,9 +471,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testRegisterInvalidPlugin()
     {
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->client->registerPlugin('testplugin', 'StdClass');
     }
 
@@ -484,9 +496,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\OutOfBoundsException
+     */
     public function testAutoloadInvalidPlugin()
     {
-        $this->setExpectedException('Solarium\Exception\OutOfBoundsException');
         $this->client->getPlugin('invalidpluginname');
     }
 
@@ -536,9 +550,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateRequest()
     {
-        $queryStub = $this->getMock('Solarium\QueryType\Select\Query\Query');
+        $queryStub = $this->createMock('Solarium\QueryType\Select\Query\Query');
 
-        $observer = $this->getMock('Solarium\Core\Query\AbstractRequestBuilder', array('build'));
+        $observer = $this->createMock('Solarium\Core\Query\AbstractRequestBuilder');
         $observer->expects($this->once())
                  ->method('build')
                  ->with($this->equalTo($queryStub))
@@ -555,14 +569,16 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->client->createRequest($queryStub);
     }
 
+    /**
+     * @expectedException \Solarium\Exception\UnexpectedValueException
+     */
     public function testCreateRequestInvalidQueryType()
     {
-        $queryStub = $this->getMock('Solarium\QueryType\Select\Query\Query');
+        $queryStub = $this->createMock('Solarium\QueryType\Select\Query\Query');
         $queryStub->expects($this->any())
              ->method('getType')
              ->will($this->returnValue('testquerytype'));
 
-        $this->setExpectedException('Solarium\Exception\UnexpectedValueException');
         $this->client->createRequest($queryStub);
     }
 
@@ -575,7 +591,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $expectedEvent->setName(Events::PRE_CREATE_REQUEST);
         }
 
-        $observer = $this->getMock('Solarium\Core\Plugin\AbstractPlugin', array('preCreateRequest'));
+        $observer = $this->createMock('Solarium\Core\Plugin\AbstractPlugin');
         $observer->expects($this->once())
                  ->method('preCreateRequest')
                  ->with($this->equalTo($expectedEvent));
@@ -599,7 +615,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $expectedEvent->setName(Events::POST_CREATE_REQUEST);
         }
 
-        $observer = $this->getMock('Solarium\Core\Plugin\AbstractPlugin', array('postCreateRequest'));
+        $observer = $this->createMock('Solarium\Core\Plugin\AbstractPlugin');
         $observer->expects($this->once())
                  ->method('postCreateRequest')
                  ->with($this->equalTo($expectedEvent));
@@ -664,7 +680,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $expectedEvent->setName(Events::PRE_CREATE_RESULT);
         }
 
-        $observer = $this->getMock('Solarium\Core\Plugin\AbstractPlugin', array('preCreateResult'));
+        $observer = $this->createMock('Solarium\Core\Plugin\AbstractPlugin');
         $observer->expects($this->once())
                  ->method('preCreateResult')
                  ->with($this->equalTo($expectedEvent));
@@ -689,7 +705,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $expectedEvent->setName(Events::POST_CREATE_RESULT);
         }
 
-        $observer = $this->getMock('Solarium\Core\Plugin\AbstractPlugin', array('postCreateResult'));
+        $observer = $this->createMock('Solarium\Core\Plugin\AbstractPlugin');
         $observer->expects($this->once())
                  ->method('postCreateResult')
                  ->with($this->equalTo($expectedEvent));
@@ -731,17 +747,19 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\UnexpectedValueException
+     */
     public function testCreateResultWithInvalidResult()
     {
         $overrideValue =  '\\stdClass';
         $response = new Response('', array('HTTP 1.0 200 OK'));
 
-        $mockQuery = $this->getMock('Solarium\QueryType\Select\Query\Query', array('getResultClass'));
+        $mockQuery = $this->createMock('Solarium\QueryType\Select\Query\Query');
         $mockQuery->expects($this->once())
                  ->method('getResultClass')
                  ->will($this->returnValue($overrideValue));
 
-        $this->setExpectedException('Solarium\Exception\UnexpectedValueException');
         $this->client->createResult($mockQuery, $response);
     }
 
@@ -751,10 +769,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $response = new Response('', array('HTTP 1.0 200 OK'));
         $result = new Result($this->client, $query, $response);
 
-        $observer = $this->getMock(
-            'Solarium\Core\Client\Client',
-            array('createRequest', 'executeRequest', 'createResult')
-        );
+        $observer = $this->createMock('Solarium\Core\Client\Client');
 
         $observer->expects($this->once())
                  ->method('createRequest')
@@ -782,7 +797,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $expectedEvent = new PreExecuteEvent($query);
 
 
-        $mock = $this->getMock('Solarium\Core\Client\Client', array('createRequest', 'executeRequest', 'createResult'));
+        $mock = $this->createMock('Solarium\Core\Client\Client');
 
         $mock->expects($this->once())
              ->method('createRequest')
@@ -796,7 +811,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
              ->method('createResult')
              ->will($this->returnValue($result));
 
-        $observer = $this->getMock('Solarium\Core\Plugin\AbstractPlugin', array('preExecute'));
+        $observer = $this->createMock('Solarium\Core\Plugin\AbstractPlugin');
         $observer->expects($this->once())
                  ->method('preExecute')
                  ->with($this->equalTo($expectedEvent));
@@ -818,7 +833,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $result = new Result($this->client, $query, $response);
         $expectedEvent = new PostExecuteEvent($query, $result);
 
-        $mock = $this->getMock('Solarium\Core\Client\Client', array('createRequest', 'executeRequest', 'createResult'));
+        $mock = $this->createMock('Solarium\Core\Client\Client');
 
         $mock->expects($this->once())
              ->method('createRequest')
@@ -832,7 +847,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
              ->method('createResult')
              ->will($this->returnValue($result));
 
-        $observer = $this->getMock('Solarium\Core\Plugin\Plugin', array('postExecute'));
+        $observer = $this->createMock('Solarium\Core\Plugin\Plugin');
         $observer->expects($this->once())
                  ->method('postExecute')
                  ->with($this->equalTo($expectedEvent));
@@ -880,7 +895,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $request = new Request();
         $response = new Response('', array('HTTP 1.0 200 OK'));
 
-        $observer = $this->getMock('Solarium\Core\Client\Adapter\Http', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Adapter\Http');
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($request))
@@ -906,14 +921,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $expectedEvent->setName(Events::PRE_EXECUTE_REQUEST);
         }
 
-        $mockAdapter = $this->getMock('Solarium\Core\Client\Adapter\Http', array('execute'));
+        $mockAdapter = $this->createMock('Solarium\Core\Client\Adapter\Http');
         $mockAdapter->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($request))
                  ->will($this->returnValue($response));
         $this->client->setAdapter($mockAdapter);
 
-        $observer = $this->getMock('Solarium\Core\Plugin\AbstractPlugin', array('preExecuteRequest'));
+        $observer = $this->createMock('Solarium\Core\Plugin\AbstractPlugin');
         $observer->expects($this->once())
                  ->method('preExecuteRequest')
                  ->with($this->equalTo($expectedEvent));
@@ -936,14 +951,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $expectedEvent->setName(Events::POST_EXECUTE_REQUEST);
         }
 
-        $mockAdapter = $this->getMock('Solarium\Core\Client\Adapter\Http', array('execute'));
+        $mockAdapter = $this->createMock('Solarium\Core\Client\Adapter\Http');
         $mockAdapter->expects($this->any())
                  ->method('execute')
                  ->with($this->equalTo($request))
                  ->will($this->returnValue($response));
         $this->client->setAdapter($mockAdapter);
 
-        $observer = $this->getMock('Solarium\Core\Plugin\AbstractPlugin', array('postExecuteRequest'));
+        $observer = $this->createMock('Solarium\Core\Plugin\AbstractPlugin');
         $observer->expects($this->once())
                  ->method('postExecuteRequest')
                  ->with($this->equalTo($expectedEvent));
@@ -987,7 +1002,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $query = new PingQuery();
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($query));
@@ -999,7 +1014,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $query = new SelectQuery();
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($query));
@@ -1011,7 +1026,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $query = new UpdateQuery();
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($query));
@@ -1023,7 +1038,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $query = new MoreLikeThisQuery();
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($query));
@@ -1035,7 +1050,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $query = new AnalysisQueryField();
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($query));
@@ -1047,7 +1062,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $query = new TermsQuery();
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($query));
@@ -1059,7 +1074,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $query = new SuggesterQuery();
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($query));
@@ -1071,7 +1086,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $query = new ExtractQuery();
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('execute'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('execute')
                  ->with($this->equalTo($query));
@@ -1095,16 +1110,20 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \Solarium\Exception\InvalidArgumentException
+     */
     public function testCreateQueryWithInvalidQueryType()
     {
-        $this->setExpectedException('Solarium\Exception\InvalidArgumentException');
         $this->client->createQuery('invalidtype');
     }
 
+    /**
+     * @expectedException \Solarium\Exception\UnexpectedValueException
+     */
     public function testCreateQueryWithInvalidClass()
     {
         $this->client->registerQueryType('invalidquery', '\\StdClass');
-        $this->setExpectedException('Solarium\Exception\UnexpectedValueException');
         $this->client->createQuery('invalidquery');
     }
 
@@ -1118,7 +1137,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $expectedEvent->setName(Events::PRE_CREATE_QUERY);
         }
 
-        $observer = $this->getMock('Solarium\Core\Plugin\AbstractPlugin', array('preCreateQuery'));
+        $observer = $this->createMock('Solarium\Core\Plugin\AbstractPlugin');
         $observer->expects($this->once())
                  ->method('preCreateQuery')
                  ->with($this->equalTo($expectedEvent));
@@ -1167,7 +1186,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $expectedEvent->setName(Events::POST_CREATE_QUERY);
         }
 
-        $observer = $this->getMock('Solarium\Core\Plugin\AbstractPlugin', array('postCreateQuery'));
+        $observer = $this->createMock('Solarium\Core\Plugin\AbstractPlugin');
         $observer->expects($this->once())
                  ->method('postCreateQuery')
                  ->with($this->equalTo($expectedEvent));
@@ -1184,7 +1203,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $options = array('optionA' => 1, 'optionB' => 2);
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('createQuery'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('createQuery')
                  ->with($this->equalTo(Client::QUERY_SELECT), $this->equalTo($options));
@@ -1196,7 +1215,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $options = array('optionA' => 1, 'optionB' => 2);
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('createQuery'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('createQuery')
                  ->with($this->equalTo(Client::QUERY_UPDATE), $this->equalTo($options));
@@ -1208,7 +1227,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $options = array('optionA' => 1, 'optionB' => 2);
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('createQuery'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('createQuery')
                  ->with($this->equalTo(Client::QUERY_PING), $this->equalTo($options));
@@ -1220,7 +1239,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $options = array('optionA' => 1, 'optionB' => 2);
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('createQuery'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('createQuery')
                  ->with($this->equalTo(Client::QUERY_MORELIKETHIS), $this->equalTo($options));
@@ -1232,7 +1251,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $options = array('optionA' => 1, 'optionB' => 2);
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('createQuery'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('createQuery')
                  ->with($this->equalTo(Client::QUERY_ANALYSIS_FIELD), $this->equalTo($options));
@@ -1244,7 +1263,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $options = array('optionA' => 1, 'optionB' => 2);
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('createQuery'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('createQuery')
                  ->with($this->equalTo(Client::QUERY_ANALYSIS_DOCUMENT), $this->equalTo($options));
@@ -1256,7 +1275,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $options = array('optionA' => 1, 'optionB' => 2);
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('createQuery'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('createQuery')
                  ->with($this->equalTo(Client::QUERY_TERMS), $this->equalTo($options));
@@ -1268,7 +1287,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $options = array('optionA' => 1, 'optionB' => 2);
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('createQuery'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('createQuery')
                  ->with($this->equalTo(Client::QUERY_SUGGESTER), $this->equalTo($options));
@@ -1280,7 +1299,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $options = array('optionA' => 1, 'optionB' => 2);
 
-        $observer = $this->getMock('Solarium\Core\Client\Client', array('createQuery'));
+        $observer = $this->createMock('Solarium\Core\Client\Client');
         $observer->expects($this->once())
                  ->method('createQuery')
                  ->with($this->equalTo(Client::QUERY_EXTRACT), $this->equalTo($options));

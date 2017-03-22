@@ -40,12 +40,12 @@
 
 namespace Solarium\Core\Client;
 
-use Solarium\Core\Configurable;
+use Solarium\Exception\InvalidArgumentException;
 
 /**
  * Class for describing an endpoint.
  */
-class Endpoint extends Configurable
+class Endpoint extends AbstractEndpoint
 {
     /**
      * Default options.
@@ -56,34 +56,28 @@ class Endpoint extends Configurable
      * @var array
      */
     protected $options = array(
+        'key'     => '',
         'scheme'  => 'http',
         'host'    => '127.0.0.1',
         'port'    => 8983,
         'path'    => '/solr',
-        'core'    => null,
+        'core'    => 'collection1',
         'timeout' => 5,
     );
 
     /**
-     * Get key value.
-     *
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->getOption('key');
-    }
-
-    /**
      * Set key value.
      *
-     * @param string $value
+     * @param string $key
      *
      * @return self Provides fluent interface
      */
-    public function setKey($value)
+    public function setKey($key)
     {
-        return $this->setOption('key', $value);
+        $this->key = $key;
+        $this->setOption('key', $key);
+
+        return $this;
     }
 
     /**
@@ -95,17 +89,10 @@ class Endpoint extends Configurable
      */
     public function setHost($host)
     {
-        return $this->setOption('host', $host);
-    }
+        $this->host = $host;
+        $this->setOption('host', $host);
 
-    /**
-     * Get host option.
-     *
-     * @return string
-     */
-    public function getHost()
-    {
-        return $this->getOption('host');
+        return $this;
     }
 
     /**
@@ -117,23 +104,17 @@ class Endpoint extends Configurable
      */
     public function setPort($port)
     {
-        return $this->setOption('port', $port);
-    }
+        $this->port = $port;
+        $this->setOption('port', $port);
 
-    /**
-     * Get port option.
-     *
-     * @return int
-     */
-    public function getPort()
-    {
-        return $this->getOption('port');
+        return $this;
     }
 
     /**
      * Set path option.
      *
-     * If the path has a trailing slash it will be removed.
+     * The path needs to start with a slash and no slash at the end. If the path has a trailing slash it will be removed.
+     * Example: /solr
      *
      * @param string $path
      *
@@ -145,17 +126,11 @@ class Endpoint extends Configurable
             $path = substr($path, 0, -1);
         }
 
-        return $this->setOption('path', $path);
-    }
+        $this->path = $path;
 
-    /**
-     * Get path option.
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->getOption('path');
+        $this->setOption('path', $path);
+
+        return $this;
     }
 
     /**
@@ -167,17 +142,10 @@ class Endpoint extends Configurable
      */
     public function setCore($core)
     {
-        return $this->setOption('core', $core);
-    }
+        $this->core = $core;
+        $this->setOption('core', $core);
 
-    /**
-     * Get core option.
-     *
-     * @return string
-     */
-    public function getCore()
-    {
-        return $this->getOption('core');
+        return $this;
     }
 
     /**
@@ -189,17 +157,10 @@ class Endpoint extends Configurable
      */
     public function setTimeout($timeout)
     {
-        return $this->setOption('timeout', $timeout);
-    }
+        $this->timeout = $timeout;
+        $this->setOption('timeout', $timeout);
 
-    /**
-     * Get timeout option.
-     *
-     * @return string
-     */
-    public function getTimeout()
-    {
-        return $this->getOption('timeout');
+        return $this;
     }
 
     /**
@@ -211,36 +172,10 @@ class Endpoint extends Configurable
      */
     public function setScheme($scheme)
     {
-        return $this->setOption('scheme', $scheme);
-    }
+        $this->scheme = $scheme;
+        $this->setOption('scheme', $scheme);
 
-    /**
-     * Get scheme option.
-     *
-     * @return string
-     */
-    public function getScheme()
-    {
-        return $this->getOption('scheme');
-    }
-
-    /**
-     * Get the base url for all requests.
-     *
-     * Based on host, path, port and core options.
-     *
-     * @return string
-     */
-    public function getBaseUri()
-    {
-        $uri = $this->getScheme().'://'.$this->getHost().':'.$this->getPort().$this->getPath().'/';
-
-        $core = $this->getCore();
-        if (!empty($core)) {
-            $uri .= $core.'/';
-        }
-
-        return $uri;
+        return $this;
     }
 
     /**
@@ -255,6 +190,8 @@ class Endpoint extends Configurable
      */
     public function setAuthentication($username, $password)
     {
+        $this->username = $username;
+        $this->password = $password;
         $this->setOption('username', $username);
         $this->setOption('password', $password);
 
@@ -262,27 +199,14 @@ class Endpoint extends Configurable
     }
 
     /**
-     * Get HTTP basic auth settings.
-     *
-     * @return array
-     */
-    public function getAuthentication()
-    {
-        return array(
-            'username' => $this->getOption('username'),
-            'password' => $this->getOption('password'),
-        );
-    }
-
-    /**
      * Magic method enables a object to be transformed to a string.
      *
      * Get a summary showing significant variables in the object
-     * note: uri resource is decoded for readability
+     * note: uri is decoded for readability
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $output = __CLASS__.'::__toString'."\n".'base uri: '.$this->getBaseUri()."\n".'host: '.$this->getHost()."\n".'port: '.$this->getPort()."\n".'path: '.$this->getPath()."\n".'core: '.$this->getCore()."\n".'timeout: '.$this->getTimeout()."\n".'authentication: '.print_r($this->getAuthentication(), 1);
 
@@ -302,6 +226,27 @@ class Endpoint extends Configurable
             switch ($name) {
                 case 'path':
                     $this->setPath($value);
+                    break;
+                case 'scheme':
+                    $this->scheme = $value;
+                    break;
+                case 'host':
+                    $this->host = $value;
+                    break;
+                case 'port':
+                    $this->port = $value;
+                    break;
+                case 'core':
+                    $this->core = $value;
+                    break;
+                case 'timeout':
+                    $this->timeout = $value;
+                    break;
+                case 'username':
+                    $this->username = $value;
+                    break;
+                case 'password':
+                    $this->password = $value;
                     break;
             }
         }

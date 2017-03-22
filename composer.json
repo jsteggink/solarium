@@ -32,6 +32,6 @@
         }
     },
     "autoload": {
-        "psr-0": { "Solarium\\": "library/" }
+        "psr-0": { "Solarium\\": "src/" }
     }
 }
